@@ -1,9 +1,8 @@
 require "mechanize"
 
-require "./craiggy/post"
-require "./craiggy/post_url"
-require "./craiggy/post_scraper"
-require "./craiggy/categories"
+require "craiggy/post"
+require "craiggy/post_url"
+require "craiggy/categories"
 
 class Craiggy
   CATEGORY = "sss"
@@ -26,9 +25,7 @@ class Craiggy
       end
 
       def scrape_posts
-        matching_links.map do |link|
-          PostScraper.new(link.click).new_post # Change this API to `Post.new(link.click)`
-        end
+        matching_links.map { |link| Post.new(link.click) }
       end
 
       def matching_links
@@ -38,7 +35,7 @@ class Craiggy
       def mech
         Mechanize.new do |agent|
           agent.robots = false
-          agent.user_agent_alias "Mac Safari"
+          agent.user_agent_alias = "Mac Safari"
         end
       end
   end
